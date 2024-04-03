@@ -1,12 +1,12 @@
 {
-  "name": "ng-whiteboard",
+  "name": "ng-whiteboard-complex",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^8.2.14",
     "@angular/core": "^8.2.14",
-    "rxjs": "^6.5.3",
-    "perfect-freehand": "file:src/dependence/perfect-freehand.tgz"
+    "tslib": "^1.10.0"
   },
   "dependencies": {
+    "ngx-colors": "^2.9.0"
   }
 }

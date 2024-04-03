@@ -4,8 +4,9 @@ import { NgWhiteboardComponent } from './ng-whiteboard.component';
 import { SvgDirective } from './core/svg/svg.directive';
 
 @NgModule({
-  imports: [CommonModule],
   declarations: [NgWhiteboardComponent, SvgDirective],
+  imports: [CommonModule],
   exports: [NgWhiteboardComponent],
+  bootstrap: [NgWhiteboardComponent]
 })
 export class NgWhiteboardModule {}

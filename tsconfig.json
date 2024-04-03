@@ -1,0 +1,41 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "skipLibCheck": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "ng-whiteboard": [
+        "dist/ng-whiteboard"
+      ],
+      "ng-whiteboard/*": [
+        "dist/ng-whiteboard/*"
+      ],
+      "ng-whiteboard-complex": [
+        "dist/ng-whiteboard-complex"
+      ],
+      "ng-whiteboard-complex/*": [
+        "dist/ng-whiteboard-complex/*"
+      ]
+    }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
+}

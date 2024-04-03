@@ -6,6 +6,9 @@
   max-width: inherit;
   max-height: inherit;
   .svgroot {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
     width: inherit;
     height: inherit;
@@ -16,8 +19,7 @@
     background-size: cover;
     background-position: 50%;
     background-repeat: no-repeat;
-    touch-action: none;
-    
+
     .wb_element,
     .selectorGroup {
       transform-box: fill-box;
@@ -28,7 +30,7 @@
     }
 
     &.drawing {
-      cursor: url('./cursor.svg') 5 5, crosshair;
+      cursor: url('content/images/cursors/cursor.svg') 5 5, crosshair;
     }
     .handlers {
       display: none;
@@ -49,7 +51,7 @@
     cursor: default;
   }
   .BRUSH {
-    cursor: url('./cursors/pencil.svg') 1 18, crosshair;
+    cursor: url('content/images/cursors/pencil.svg') 1 18, crosshair;
   }
   .IMAGE {
     cursor: copy;
@@ -67,7 +69,7 @@
     cursor: text;
   }
   .ERASER {
-    cursor: url('./cursors/eraser.svg') 0 12, crosshair;
+    cursor: url('content/images/cursors/eraser.svg') 0 12, crosshair;
   }
 }
 

@@ -13,7 +13,8 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { NgWhiteboardService } from './ng-whiteboard.service';
-import { Subscription, fromEvent, skip, BehaviorSubject } from 'rxjs';
+import { Subscription, fromEvent, BehaviorSubject } from 'rxjs';
+import { skip } from '../dependence/rxjs/skip';
 import {
   ElementTypeEnum,
   FormatType,
@@ -58,12 +59,13 @@ export class NgWhiteboardComponent implements OnInit, OnChanges, AfterViewInit, 
   get data(): WhiteboardElement[] {
     return this._data.getValue();
   }
+  svgRoot: SVGSVGElement
 
   @Input() options!: WhiteboardOptions;
 
   @Input() set selectedTool(tool: ToolsEnum) {
     if (this._selectedTool !== tool) {
-      if (this._selectedTool === ToolsEnum.TEXT && this.tempElement?.type === ElementTypeEnum.TEXT) {
+      if (this._selectedTool === ToolsEnum.TEXT && this.tempElement && this.tempElement.type === ElementTypeEnum.TEXT) {
         this.finishTextInput();
       }
       this._selectedTool = tool;
@@ -73,6 +75,8 @@ export class NgWhiteboardComponent implements OnInit, OnChanges, AfterViewInit, 
     }
   }
   get selectedTool(): ToolsEnum {
+    if (this._selectedTool && this.svgContainer)
+      this.svgContainer.nativeElement.setAttribute("class", 'svgroot ' + this._selectedTool);
     return this._selectedTool;
   }
   @Input() drawingEnabled = true;
@@ -96,6 +100,7 @@ export class NgWhiteboardComponent implements OnInit, OnChanges, AfterViewInit, 
   @Input() enableGrid = false;
   @Input() gridSize = 10;
   @Input() snapToGrid = false;
+  @Input() initData: string;
 
   @Output() ready = new EventEmitter();
   @Output() dataChange = new EventEmitter<WhiteboardElement[]>();
@@ -134,9 +139,11 @@ export class NgWhiteboardComponent implements OnInit, OnChanges, AfterViewInit, 
     private whiteboardService: NgWhiteboardService,
     private _cd: ChangeDetectorRef,
     private _svgService: SvgService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    if (this.initData)
+      this.loadData(this.initData);
     this._initInputsFromOptions(this.options);
     this._initObservables();
     this._initialData = JSON.parse(JSON.stringify(this.data));
@@ -145,6 +152,9 @@ export class NgWhiteboardComponent implements OnInit, OnChanges, AfterViewInit, 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['options']) {
       this._initInputsFromOptions(changes['options'].currentValue);
+    }
+    if (changes['initData']) {
+      this.loadData(changes['initData'].currentValue);
     }
   }
 
@@ -242,7 +252,9 @@ export class NgWhiteboardComponent implements OnInit, OnChanges, AfterViewInit, 
     this._subscriptionList.push(this.whiteboardService.eraseMethodCalled$.subscribe(() => this.clearDraw()));
     this._subscriptionList.push(this.whiteboardService.undoMethodCalled$.subscribe(() => this.undoDraw()));
     this._subscriptionList.push(this.whiteboardService.redoMethodCalled$.subscribe(() => this.redoDraw()));
+    this._subscriptionList.push(this.whiteboardService.loadDataMethodCalled$.subscribe((data:string) => this.loadData(data)));
     this._subscriptionList.push(fromEvent(window, 'resize').subscribe(() => this._resizeScreen()));
+
     this._subscriptionList.push(
       this._data.pipe(skip(1)).subscribe((data) => {
         this.dataChange.emit(data);
@@ -297,6 +309,7 @@ export class NgWhiteboardComponent implements OnInit, OnChanges, AfterViewInit, 
   handleStartBrush(info: PointerEvent) {
     const element = this._generateNewElement(ElementTypeEnum.BRUSH);
     this.tempDraw = [this._calculateXAndY([info.offsetX, info.offsetY])];
+    console.log(info);
     const outlinePoints = getStroke(this.tempDraw, getStrokeOptions);
     const pathData = Utils.getSvgPathFromStroke(outlinePoints);
     element.value = pathData;
@@ -675,6 +688,7 @@ export class NgWhiteboardComponent implements OnInit, OnChanges, AfterViewInit, 
   private _pushToData(element: WhiteboardElement) {
     this.data.push(element);
     this._data.next(this.data);
+
   }
   private _removeFromData(element: WhiteboardElement) {
     const index = this.data.indexOf(element);
@@ -920,5 +934,15 @@ export class NgWhiteboardComponent implements OnInit, OnChanges, AfterViewInit, 
     if (subscription) {
       subscription.unsubscribe();
     }
+  }
+  loadData(data: string) {
+    if (data) {
+      let initElement = JSON.parse(data) as WhiteboardElement[];
+      this._data.next(initElement);;
+      // this._data = new BehaviorSubject<WhiteboardElement[]>(initElement);
+    }
+  }
+  getData() {
+    return this.data;
   }
 }

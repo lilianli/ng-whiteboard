@@ -1,142 +1,68 @@
-<p align="center">
-  <img height="256px" width="256px" style="text-align: center;" src="https://cdn.jsdelivr.net/gh/mostafazke/ng-whiteboard@development/projects/demo/src/assets/icons/icon-512x512.png">
-</p>
+# NgWhiteboardLib
 
-# <center>ng-whiteboard</center>
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.29.
 
-## <center>Lightweight angular whiteboard</center>
+Source code was forked from [mostafazke/ng-whiteboard](https://github.com/mostafazke/ng-whiteboard).
 
-[![Build Status](https://dl.circleci.com/status-badge/img/gh/mostafazke/ng-whiteboard/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/mostafazke/ng-whiteboard/tree/master)
-[![npm version](https://badge.fury.io/js/ng-whiteboard.svg)](https://badge.fury.io/js/ng-whiteboard) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Downloads](https://img.shields.io/npm/dm/ng-whiteboard.svg)](https://www.npmjs.com/package/ng-whiteboard)
-[![codecov](https://codecov.io/gh/mostafazke/ng-whiteboard/branch/master/graph/badge.svg?token=4VewQU6OZN)](https://codecov.io/gh/mostafazke/ng-whiteboard)
-## Demo
+Add TouchEvent listeners for mobile.
 
-https://mostafazke.github.io/ng-whiteboard
+## Development server
 
-## Features
+```bash
 
-- Supports touch.
-- Highly Customizable.
-- Lightweight.
-- Easy to use.
-- Custom colors.
-- Custom background colors.
-- (Brush | Image | Line | Rect | Ellipse | Text | Eraser) Tools.
-- Custom stroke size.
-- Save drawn as (svg | png | jpeg | base64) images.
-- Undo - Redo.
+cd ./
+npm i
 
-**_And more to come_...**
+<!-- 这个组件需要额外的依赖 ng-colors -->
+cd project/ng-whiteboard-complex
+npm i
 
-## Installation
-
-1. Install `ng-whiteboard` via:
-
-   ```bash
-   yarn add ng-whiteboard --save
-   ```
-
-   or
-
-   ```bash
-   npm install ng-whiteboard --save
-   ```
-
-2. Add the module to your project
-
-   ```typescript
-   import { NgWhiteboardModule } from 'ng-whiteboard';
-   ...
-
-   @NgModule({
-       imports: [
-           ...
-           NgWhiteboardModule
-       ]
-       ...
-   )}
-   ```
-
-3. Insert the Whiteboard Component element in the html.
-
-   ```html
-   <ng-whiteboard></ng-whiteboard>
-   ```
-
-## Options
-
-| Input             | Type                                                                                     | Default         | Description                                                         |
-| ----------------- | ---------------------------------------------------------------------------------------- | --------------- | ------------------------------------------------------------------- |
-| [data]            | [[WhiteboardElement](projects\ng-whiteboard\src\lib\models\whiteboard-element.model.ts)] | []              | The whiteboard data                                                 |
-| [options]         | [WhiteboardOptions](projects\ng-whiteboard\src\lib\models\whiteboard-options.model.ts)   | null            | component configuration object, properties described below          |
-| [drawingEnabled]  | boolean                                                                                  | true            | Enable mouse/touch interactions                                     |
-| [selectedTool]    | ToolsEnum                                                                                | ToolsEnum.BRUSH | The current selected tool                                           |
-| [canvasWidth]     | number                                                                                   | 800             | The width of whiteboard canvas                                      |
-| [canvasHeight]    | number                                                                                   | 600             | The height of whiteboard canvas                                     |
-| [fullScreen]      | boolean                                                                                  | true            | if true change (canvasWidth, canvasHeight) to fit the parentainer   |
-| [strokeColor]     | string                                                                                   | #000000         | The default stroke color                                            |
-| [backgroundColor] | string                                                                                   | #FFFFFF         | The default background color                                        |
-| [fill]            | string                                                                                   | #333333         | The default fill color                                              |
-| [strokeWidth]     | number                                                                                   | 2               | The default stroke width                                            |
-| [zoom]            | number                                                                                   | 1               | Zoom level                                                          |
-| [fontFamily]      | string                                                                                   | sans-serif      | The default font family                                             |
-| [fontSize]        | number                                                                                   | 24              | The default font size                                               |
-| [center]          | boolean                                                                                  | true            | Center the canvas in parent component, works with fullScreen: false |
-| [x]               | number                                                                                   | 0               | if center is false, set the X axis                                  |
-| [y]               | number                                                                                   | 0               | if center is false, set the Y axis                                  |
-| [enableGrid]      | boolean                                                                                  | false           | Enable the grid pattern                                             |
-| [gridSize]        | number                                                                                   | 10              | Set the grid inner boxes size                                       |
-| [snapToGrid]      | boolean                                                                                  | false           | Enable snaping to grid                                              |
-| [lineJoin]        | LineJoinEnum .ROUND                                                                      | LineJoinEnum    | The default Line join                                               |
-| [lineCap]         | LineCapEnum .ROUND                                                                       | LineCapEnum     | The default Line cap                                                |
-| [dasharray]       | string                                                                                   | ''              | The default dash-array                                              |
-| [dashoffset]      | number                                                                                   | 0               | The default dash-offset                                             |
-
-## Outputs
-
-| Name            | Description                                      | Arguments                |
-| --------------- | ------------------------------------------------ | ------------------------ |
-| (ready)         | Emitted when the component is ready              | None                     |
-| (dataChange)    | Emitted when the data is changed                 | WhiteboardElement[]      |
-| (clear)         | Emitted when the canvas is cleared               | None                     |
-| (undo)          | Emitted when the user undo an action             | None                     |
-| (redo)          | Emitted when the user redo an action             | None                     |
-| (imageAdded)    | Emitted when the user add an image to the canvas | None                     |
-| (save)          | Emitted when the user save the canvas            | base64 image             |
-| (selectElement) | Emitted when the user select/deselect an element | WhiteboardElement / null |
-| (deleteElement) | Emitted when the user delete an element          | WhiteboardElement        |
-| (toolChanged)   | Emitted when the user change the tool            | ToolsEnum                |
-
-## Methods
-
-| Name     | Description             | Arguments                        | Defaults                                |
-| -------- | ----------------------- | -------------------------------- | --------------------------------------- |
-| save     | Save the current board  | [format]: string, [name]: string | [format]: 'base64', [name]: 'New board' |
-| addImage | Add images to the board | image: (string; ArrayBuffer)     | None                                    |
-| erase    | Clean the whiteboard    | None                             | None                                    |
-| undo     | Undo last action        | None                             | None                                    |
-| redo     | Redo last action        | None                             | None                                    |
-
-to use these Methods inject NgWhiteboardService in your project
-
-```typescript
-import { NgWhiteboardService, FormatType } from 'ng-whiteboard';
-...
-
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-   styleUrls: ['./app.component.scss']
-   ...
-)}
-
-  constructor(private whiteboardService: NgWhiteboardService) {
-   this.whiteboardService.save(FormatType.Base64);
-  }
+ng serve
 
 ```
 
-## Contributing
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-The project is open for contributors! Please file an issue or make a PR:)
+## Note
+
+此项目基于[ng-whiteboard](https://github.com/mostafazke/ng-whiteboard)修改，版本3.0.2。
+
+### Dependency and PeerDependency
+
+#### perfect-freehand
+
+ng-whiteboard 组件依赖的"perfect-freehand": "^1.2.0", 含有无法识别的ts语法
+
+```ts
+    import type { xxx } from "module". 
+```
+
+只删除了这个type 语法，其余源码逻辑都未做修改。尽量避免使用其他版本造成的功能缺失或api不一致。
+
+#### ng-colors
+
+原本使用的版本是"ngx-colors": "^3.5.2",降低成了 "^2.5.0", 但这只是个color picker，应该影响不大。
+
+### Build Component
+
+为了方便修改样式，实际项目中使用的whiteboard是引用了ng-whiteboard-complex的源码(文件名为ng-whiteboard-complex.component.ts)，而不是导出为独立组件。此项目中该目录仅作测试使用。
+
+## Code scaffolding
+
+Run `ng g c component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+## Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

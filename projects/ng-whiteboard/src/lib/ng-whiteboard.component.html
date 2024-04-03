@@ -1,10 +1,12 @@
-<svg [class]="'svgroot ' + selectedTool" #svgContainer id="svgroot" xlinkns="http://www.w3.org/2000/svg" svg>
+<svg class="svgroot " #svgContainer id="svgroot" xlinkns="http://www.w3.org/2000/svg" svg>
+  <!-- <svg [class]="'svgroot ' + selectedTool" #svgContainer id="svgroot" xlinkns="http://www.w3.org/2000/svg" svg> -->
   <svg
     id="canvasBackground"
     [attr.width]="canvasWidth * zoom"
     [attr.height]="canvasHeight * zoom"
     [attr.x]="x"
     [attr.y]="y"
+    class=""
     style="pointer-events: none"
   >
     <defs id="grid-pattern">
@@ -45,6 +47,7 @@
     id="svgcontent"
     [attr.x]="x"
     [attr.y]="y"
+    class=""
   >
     <rect
       id="contentBackground"

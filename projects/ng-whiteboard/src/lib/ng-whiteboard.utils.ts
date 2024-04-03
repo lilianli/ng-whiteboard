@@ -1,6 +1,6 @@
 import { FormatType, formatTypes } from './models';
 
-export default class Utils {
+class Utils {
   static toSvgString(svgNode: SVGSVGElement): string {
     const serializer = new XMLSerializer();
     let svgString = serializer.serializeToString(svgNode);
@@ -91,3 +91,4 @@ export default class Utils {
     return result;
   }
 }
+export default Utils

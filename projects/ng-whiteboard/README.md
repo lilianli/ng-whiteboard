@@ -1,142 +1,24 @@
-<p align="center">
-  <img height="256px" width="256px" style="text-align: center;" src="https://cdn.jsdelivr.net/gh/mostafazke/ng-whiteboard@development/projects/demo/src/assets/icons/icon-512x512.png">
-</p>
+# NgWhiteboard
 
-# <center>ng-whiteboard</center>
+This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.14.
 
-## <center>Lightweight angular whiteboard</center>
+## Code scaffolding
 
-[![Build Status](https://dl.circleci.com/status-badge/img/gh/mostafazke/ng-whiteboard/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/mostafazke/ng-whiteboard/tree/master)
-[![npm version](https://badge.fury.io/js/ng-whiteboard.svg)](https://badge.fury.io/js/ng-whiteboard) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Downloads](https://img.shields.io/npm/dm/ng-whiteboard.svg)](https://www.npmjs.com/package/ng-whiteboard)
-[![codecov](https://codecov.io/gh/mostafazke/ng-whiteboard/branch/master/graph/badge.svg?token=4VewQU6OZN)](https://codecov.io/gh/mostafazke/ng-whiteboard)
-## Demo
+Run `ng generate component component-name --project ng-whiteboard` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ng-whiteboard`.
+> Note: Don't forget to add `--project ng-whiteboard` or else it will be added to the default project in your `angular.json` file. 
 
-https://mostafazke.github.io/ng-whiteboard
+## Build
 
-## Features
+Run `ng build ng-whiteboard` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-- Supports touch.
-- Highly Customizable.
-- Lightweight.
-- Easy to use.
-- Custom colors.
-- Custom background colors.
-- (Brush | Image | Line | Rect | Ellipse | Text | Eraser) Tools.
-- Custom stroke size.
-- Save drawn as (svg | png | jpeg | base64) images.
-- Undo - Redo.
+## Publishing
 
-**_And more to come_...**
+After building your library with `ng build ng-whiteboard`, go to the dist folder `cd dist/ng-whiteboard` and run `npm publish`.
 
-## Installation
+## Running unit tests
 
-1. Install `ng-whiteboard` via:
+Run `ng test ng-whiteboard` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-   ```bash
-   yarn add ng-whiteboard --save
-   ```
+## Further help
 
-   or
-
-   ```bash
-   npm install ng-whiteboard --save
-   ```
-
-2. Add the module to your project
-
-   ```typescript
-   import { NgWhiteboardModule } from 'ng-whiteboard';
-   ...
-
-   @NgModule({
-       imports: [
-           ...
-           NgWhiteboardModule
-       ]
-       ...
-   )}
-   ```
-
-3. Insert the Whiteboard Component element in the html.
-
-   ```html
-   <ng-whiteboard></ng-whiteboard>
-   ```
-
-## Options
-
-| Input             | Type                                                                                     | Default         | Description                                                         |
-| ----------------- | ---------------------------------------------------------------------------------------- | --------------- | ------------------------------------------------------------------- |
-| [data]            | [[WhiteboardElement](projects\ng-whiteboard\src\lib\models\whiteboard-element.model.ts)] | []              | The whiteboard data                                                 |
-| [options]         | [WhiteboardOptions](projects\ng-whiteboard\src\lib\models\whiteboard-options.model.ts)   | null            | component configuration object, properties described below          |
-| [drawingEnabled]  | boolean                                                                                  | true            | Enable mouse/touch interactions                                     |
-| [selectedTool]    | ToolsEnum                                                                                | ToolsEnum.BRUSH | The current selected tool                                           |
-| [canvasWidth]     | number                                                                                   | 800             | The width of whiteboard canvas                                      |
-| [canvasHeight]    | number                                                                                   | 600             | The height of whiteboard canvas                                     |
-| [fullScreen]      | boolean                                                                                  | true            | if true change (canvasWidth, canvasHeight) to fit the parentainer   |
-| [strokeColor]     | string                                                                                   | #000000         | The default stroke color                                            |
-| [backgroundColor] | string                                                                                   | #FFFFFF         | The default background color                                        |
-| [fill]            | string                                                                                   | #333333         | The default fill color                                              |
-| [strokeWidth]     | number                                                                                   | 2               | The default stroke width                                            |
-| [zoom]            | number                                                                                   | 1               | Zoom level                                                          |
-| [fontFamily]      | string                                                                                   | sans-serif      | The default font family                                             |
-| [fontSize]        | number                                                                                   | 24              | The default font size                                               |
-| [center]          | boolean                                                                                  | true            | Center the canvas in parent component, works with fullScreen: false |
-| [x]               | number                                                                                   | 0               | if center is false, set the X axis                                  |
-| [y]               | number                                                                                   | 0               | if center is false, set the Y axis                                  |
-| [enableGrid]      | boolean                                                                                  | false           | Enable the grid pattern                                             |
-| [gridSize]        | number                                                                                   | 10              | Set the grid inner boxes size                                       |
-| [snapToGrid]      | boolean                                                                                  | false           | Enable snaping to grid                                              |
-| [lineJoin]        | LineJoinEnum .ROUND                                                                      | LineJoinEnum    | The default Line join                                               |
-| [lineCap]         | LineCapEnum .ROUND                                                                       | LineCapEnum     | The default Line cap                                                |
-| [dasharray]       | string                                                                                   | ''              | The default dash-array                                              |
-| [dashoffset]      | number                                                                                   | 0               | The default dash-offset                                             |
-
-## Outputs
-
-| Name            | Description                                      | Arguments                |
-| --------------- | ------------------------------------------------ | ------------------------ |
-| (ready)         | Emitted when the component is ready              | None                     |
-| (dataChange)    | Emitted when the data is changed                 | WhiteboardElement[]      |
-| (clear)         | Emitted when the canvas is cleared               | None                     |
-| (undo)          | Emitted when the user undo an action             | None                     |
-| (redo)          | Emitted when the user redo an action             | None                     |
-| (imageAdded)    | Emitted when the user add an image to the canvas | None                     |
-| (save)          | Emitted when the user save the canvas            | base64 image             |
-| (selectElement) | Emitted when the user select/deselect an element | WhiteboardElement / null |
-| (deleteElement) | Emitted when the user delete an element          | WhiteboardElement        |
-| (toolChanged)   | Emitted when the user change the tool            | ToolsEnum                |
-
-## Methods
-
-| Name     | Description             | Arguments                        | Defaults                                |
-| -------- | ----------------------- | -------------------------------- | --------------------------------------- |
-| save     | Save the current board  | [format]: string, [name]: string | [format]: 'base64', [name]: 'New board' |
-| addImage | Add images to the board | image: (string; ArrayBuffer)     | None                                    |
-| erase    | Clean the whiteboard    | None                             | None                                    |
-| undo     | Undo last action        | None                             | None                                    |
-| redo     | Redo last action        | None                             | None                                    |
-
-to use these Methods inject NgWhiteboardService in your project
-
-```typescript
-import { NgWhiteboardService, FormatType } from 'ng-whiteboard';
-...
-
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-   styleUrls: ['./app.component.scss']
-   ...
-)}
-
-  constructor(private whiteboardService: NgWhiteboardService) {
-   this.whiteboardService.save(FormatType.Base64);
-  }
-
-```
-
-## Contributing
-
-The project is open for contributors! Please file an issue or make a PR:)
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
